@@ -108,7 +108,7 @@ def fetch_lyrics(song):
     lyrics = get_song_lyrics(path)
     return {"artist": artist, "title": title, "lyrics": lyrics}
 
-def save_lyrics_to_csv(artist, filename="your_file.csv"):
+def save_lyrics_to_csv(artist, filename="lyrics_collection.csv"):
     logging.info(f"Retrieving lyrics for {artist}")
     artist_songs = search_songs(artist)
     
@@ -122,6 +122,8 @@ def save_lyrics_to_csv(artist, filename="your_file.csv"):
     logging.info(f"Lyrics saved in {filename}")
 
 if __name__ == "__main__":
-    artist = "artist_name"
-    save_lyrics_to_csv(artist)
+    artist = input("Enter the artist's name: ")
+    filename = input("Enter the output file name (with .csv extension): ")
+    save_lyrics_to_csv(artist, filename)
+
 
