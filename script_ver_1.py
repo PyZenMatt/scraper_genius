@@ -4,12 +4,13 @@ import pandas as pd
 import logging
 from concurrent.futures import ThreadPoolExecutor
 import time
+import argparse
 
 # Logging configuration
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Insert your Genius access token
-GENIUS_ACCESS_TOKEN = 'Insert_token_here'
+GENIUS_ACCESS_TOKEN = 'C69sRC-fcamIIYR_radlopocnmZ8JWG0W4FSBEtmyW767ky5FkQH-gtjYElWmMXC'
 
 def get_song_lyrics(song_api_path):
     logging.info(f"Retrieving lyrics for {song_api_path}")
@@ -20,7 +21,7 @@ def get_song_lyrics(song_api_path):
         try:
             response = requests.get(url, headers=headers)
             if response.status_code != 200:
-                logging.error(f"Error retrieving song {song_api_path}: {response.status_code}")
+                logging.error(f"Error retrieving the song {song_api_path}: {response.status_code}")
                 return "Lyrics not available"
             
             song_data = response.json()
@@ -72,7 +73,7 @@ def search_songs(artist_name):
                     logging.error(f"Artist {artist_name} not found")
                     return []
 
-                # Retrieve songs by the artist
+                # Retrieve artist's songs
                 songs_url = f"{base_url}/artists/{artist_id}/songs"
                 all_songs = []
                 page = 1
@@ -95,7 +96,7 @@ def search_songs(artist_name):
                         break
                 return all_songs
             else:
-                logging.error(f"Error searching for songs by {artist_name}: {response.status_code}")
+                logging.error(f"Error searching songs for {artist_name}: {response.status_code}")
                 time.sleep(2)  # Wait 2 seconds before retrying
         except requests.exceptions.ConnectionError:
             logging.warning("Connection error. Retrying...")
@@ -103,12 +104,36 @@ def search_songs(artist_name):
     
     return []
 
+def is_artist_valid(artist_name):
+    base_url = "https://api.genius.com"
+    headers = {'Authorization': f'Bearer {GENIUS_ACCESS_TOKEN}'}
+    search_url = f"{base_url}/search"
+    params = {'q': artist_name}
+    logging.info(f"Checking the existence of artist {artist_name} on Genius")
+
+    try:
+        response = requests.get(search_url, headers=headers, params=params)
+        if response.status_code == 200:
+            json_data = response.json()
+            for hit in json_data['response']['hits']:
+                if hit['result']['primary_artist']['name'].lower() == artist_name.lower():
+                    logging.info(f"Artist {artist_name} found on Genius")
+                    return True
+        logging.error(f"Artist {artist_name} not found on Genius")
+    except requests.exceptions.ConnectionError:
+        logging.warning("Connection error while checking artist")
+    return False
+
 def fetch_lyrics(song):
     artist, title, path = song
     lyrics = get_song_lyrics(path)
     return {"artist": artist, "title": title, "lyrics": lyrics}
 
-def save_lyrics_to_csv(artist, filename="lyrics_collection.csv"):
+def save_lyrics_to_csv(artist, filename="testi_colle.csv"):
+    if not is_artist_valid(artist):
+        logging.error(f"Artist {artist} is invalid or not found. Terminating execution.")
+        return
+
     logging.info(f"Retrieving lyrics for {artist}")
     artist_songs = search_songs(artist)
     
@@ -121,9 +146,17 @@ def save_lyrics_to_csv(artist, filename="lyrics_collection.csv"):
     df.to_csv(filename, index=False)
     logging.info(f"Lyrics saved in {filename}")
 
-if __name__ == "__main__":
-    artist = input("Enter the artist's name: ")
-    filename = input("Enter the output file name (with .csv extension): ")
+def main():
+    parser = argparse.ArgumentParser(description="Lyrics scraper from Genius.")
+    parser.add_argument("artist", type=str, help="Artist's name")
+    parser.add_argument("filename", type=str, help="Output file name (e.g., lyrics.csv)")
+
+    args = parser.parse_args()
+
+    artist = args.artist
+    filename = args.filename
+
     save_lyrics_to_csv(artist, filename)
 
-
+if __name__ == "__main__":
+    main()
