@@ -1,33 +1,40 @@
-This project is a scraper to extract song lyrics from the Genius website. It uses Python and libraries like requests and BeautifulSoup.
-Features
+# Lyrics Scraper
 
-    Extraction of song lyrics.
-    Gathering information about artists.
+This project is a Python script for scraping song lyrics from the Genius website using the Genius API.
 
-Installation
+## Features
 
-git clone https://github.com/your-username/scraper-genius.git
+- Retrieve song lyrics by artist name
+- Save lyrics to a CSV file
+- Mocked tests for reliable testing without real API calls
 
-Install dependencies:
+## Installation
 
-bash
+1. Clone this repository:
 
-    pip install -r requirements.txt
-    
-Usage
-Get the API keys from https://docs.genius.com/
-Modify the script_ver_1.py script to specify access token replacing GENIUS_ACCESS_TOKEN.
-Modify the script_ver_1.py script to specify the artist whose lyrics you want to extract by replacing "artist_name" with the desired name.
-Modify the script_ver_1.py script to specify the file_name.csv you want to save by replacing "filename" with the desired name.csv.
+git clone https://github.com/your-username/lyrics-scraper.git
 
-Run the script:
 
-bash
+2. Navigate to the project directory:
 
-python script_ver_1.py
+cd lyrics-scraper
 
-The lyrics will be saved in a CSV file named your_file.csv.
-Contributing
+3. Install the required dependencies:
 
-Feel free to fork the project and send pull requests. Any contribution is welcome!
+pip install -r requirements.txt
 
+## Usage
+
+To run the scraper, use the following command:
+
+python scraper.py "Artist Name" output.csv
+
+## Running Tests
+
+To run the tests, execute:
+
+python test_scraper.py
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) 
