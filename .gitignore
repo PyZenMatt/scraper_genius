@@ -1,0 +1,16 @@
+# Virtual environment
+venv/
+.env
+
+# Cache and build files
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE specific
+.vscode/
+.idea/
+
+# OS generated
+.DS_Store
+Thumbs.db

@@ -1,57 +1,59 @@
-# Lyrics Scraper
+# Genius Lyrics Scraper 🎵
 
-This project is a Python script for scraping song lyrics from the Genius website using the Genius API.
+A Python GUI application to scrape song lyrics from Genius.com, with multi-threading support and export to CSV.
 
-## Features
+![Screenshot](docs/screenshot.png) <!-- Aggiungi uno screenshot -->
 
-- Retrieve song lyrics by artist name
-- Save lyrics to a CSV file
-- Mocked tests for reliable testing without real API calls
+## Features ✨
+- Search for all songs by an artist
+- Select multiple songs to download
+- Export lyrics to CSV
+- Progress tracking and logging
+- Responsive GUI with Tkinter
 
-## Installation
+## Installation ⚙️
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/lyrics-scraper.git
+   cd lyrics-scraper
 
-1. Clone this repository:
-   git clone https://github.com/your-username/lyrics-scraper.git
-
-    Navigate to the project directory:
-
-
-cd lyrics-scraper
-
-Install the required dependencies:
-
+    Install dependencies:
+    bash
+    Copy
 
     pip install -r requirements.txt
 
-Usage
+Usage 🚀
 
-To run the scraper, use the following command:
+Run the application:
+bash
+Copy
 
+python src/main.py
 
+Project Structure 🗂️
+Copy
 
-python scraper.py "Artist Name" output.csv
+lyrics-scraper/
+├── src/               # Source code
+├── tests/             # Unit tests
+└── requirements.txt   # Dependencies
 
-Tests
-Overview
+Testing ✅
 
-The project includes a suite of unit tests that verify the functionality of the scraper. These tests use unittest and unittest.mock to simulate API responses and test various scenarios, including successful retrieval of lyrics, handling of missing data, and error cases.
-Running Tests
+Run all tests:
+bash
+Copy
 
-To run the tests, execute:
+pytest tests/
 
-python -m unittest discover tests
+Contributing 🤝
 
-Test Coverage
+Pull requests are welcome! For major changes, please open an issue first.
+License 📄
 
-    test_get_song_lyrics_success: Verifies successful retrieval of lyrics.
-    test_get_song_lyrics_no_lyrics_found: Ensures correct handling when no lyrics are found.
-    test_search_songs_artist_found: Checks the retrieval of songs for a found artist.
-    test_search_songs_artist_not_found: Tests behavior when the artist is not found.
-    test_is_artist_valid_found: Confirms the existence check for an artist.
-    test_is_artist_valid_not_found: Ensures correct handling for non-existent artists.
-    test_fetch_lyrics_success: Verifies fetching of lyrics for a song.
-    test_save_lyrics_to_csv: Checks the saving of lyrics to a CSV file.
+MIT
 
-License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+[![Python Version](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
